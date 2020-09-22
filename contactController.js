@@ -40,7 +40,7 @@ exports.new = function (req, res) {
 
 // Handle view contact info
 exports.view = function (req, res) {
-    Contact.findById(req.params.contact_id, function (err, contact) {
+    Contact.find({ 'name': req.params.name }, function (err, contact) {
         if (err)
             res.send(err);
         res.json({
@@ -50,23 +50,42 @@ exports.view = function (req, res) {
     });
 };
 
+// // Handle update contact info
+// exports.update = function (req, res) {
+//     Contact.findById(req.params.contact_id, function (err, contact) {
+//         if (err)
+//             res.send(err);
+//         contact.name = req.body.name ? req.body.name : contact.name;
+//         contact.gender = req.body.gender;
+//         contact.email = req.body.email;
+//         contact.phone = req.body.phone;
+//         // save the contact and check for errors
+//         contact.save(function (err) {
+//             if (err)
+//                 res.json(err);
+//             res.json({
+//                 message: 'Contact Info updated',
+//                 data: contact
+//             });
+//         });
+//     });
+// };
+
+
 // Handle update contact info
 exports.update = function (req, res) {
-    Contact.findById(req.params.contact_id, function (err, contact) {
+    const update = {
+        name: req.body.name ? req.body.name : req.params.name,
+        gender: req.body.gender,
+        email: req.body.email,
+        phone: req.body.phone
+    }
+    document = Contact.findOneAndUpdate({ 'name': req.params.name }, update, {new: true}, function (err, contact) {
         if (err)
             res.send(err);
-        contact.name = req.body.name ? req.body.name : contact.name;
-        contact.gender = req.body.gender;
-        contact.email = req.body.email;
-        contact.phone = req.body.phone;
-        // save the contact and check for errors
-        contact.save(function (err) {
-            if (err)
-                res.json(err);
-            res.json({
-                message: 'Contact Info updated',
-                data: contact
-            });
+        res.json({
+            message: 'Contact Info updated',
+            data: contact
         });
     });
 };
@@ -86,7 +105,7 @@ exports.deleteAll = function (req, res) {
 // Handle delete contact
 exports.delete = function (req, res) {
     Contact.remove({
-        _id: req.params.contact_id
+        name: req.params.name
     }, function (err, contact) {
         if (err)
             res.send(err);

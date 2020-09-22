@@ -18,7 +18,7 @@ router.route('/contacts')
     .post(contactController.new)
     .delete(contactController.deleteAll)
 
-router.route('/contacts/:contact_id')
+router.route('/contacts/:name')
     .get(contactController.view)
     .patch(contactController.update)
     .put(contactController.update)
