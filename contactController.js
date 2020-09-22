@@ -45,7 +45,7 @@ exports.view = function (req, res) {
             res.send(err);
         res.json({
             message: 'Contact details loading..',
-            data: contact
+            data: contact[0] // 1 item
         });
     });
 };
@@ -59,7 +59,7 @@ exports.update = function (req, res) {
         email: req.body.email,
         phone: req.body.phone
     }
-    Contact.findOneAndUpdate({ 'name': req.params.name }, update, {new: true, upsert:true}, function (err, contact) {
+    Contact.findOneAndUpdate({ 'name': req.params.name }, update, {returnOriginal: false, upsert:true, rawResult: true}, function (err, contact) {
         if (err)
             res.send(err);
         res.json({

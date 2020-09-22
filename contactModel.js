@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 // Setup schema
 var contactSchema = mongoose.Schema({
     name: {
