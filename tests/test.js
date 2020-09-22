@@ -1,4 +1,5 @@
 const TEST_PORT = 8081;
+const POST_MESSAGE_SUCCESS = "New contact created!";
 
 process.env.PORT = TEST_PORT; 
 
@@ -21,6 +22,7 @@ describe("Contacts", () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
+                    res.body.data.should.be.a('array');
                     done();
                 });
         });       
@@ -50,26 +52,31 @@ describe("Contacts", () => {
         //         });
         // });
     });
+});
 
-    // describe("POST /", () => {
-    //     // Test to post single contact record
-    //     it("should post a single contact record", (done) => {
-    //         var contact = {  
-    //             id: "11111111",
-    //             name: "test1",
-    //             gender: "male",
-    //             email: "test1@gmail.com",
-    //             phone: "123",
-    //         }; 
+describe("Contacts POST", () => {
+    describe("POST /", () => {
+        // Test to post single contact record
+        it("should post a single contact record", (done) => {
+            var contact = {  
+                name: "test1",
+                gender: "male",
+                email: "test1@gmail.com",
+                phone: "123"
+            }; 
 
-    //         chai.request(app)
-    //             .post(`/api/contacts/${id}`)
-    //             .end((err, res) => {
-    //                 res.should.have.status(200);
-    //                 res.body.should.be.a('object');
-    //                 done();
-    //             });
-    //     });
-    // }
-
+            chai.request(app)
+                .post(`/api/contacts`)
+                .send(contact)
+                .end((err, res) => {
+                    res.should.have.status(200); 
+                    res.body.message.should.equal(POST_MESSAGE_SUCCESS);
+                    res.body.data.name.should.equal(contact["name"]);
+                    res.body.data.gender.should.equal(contact["gender"]);
+                    res.body.data.email.should.equal(contact["email"]);
+                    res.body.data.phone.should.equal(contact["phone"]);
+                    done();
+                });
+        });
+    });
 });

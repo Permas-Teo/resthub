@@ -4,7 +4,7 @@
   "description": "Demonstrate simple Restful API implementation",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require tests/*.js --exit"
+    "test": "mocha tests/*.js --exit"
   },
   "keywords": [
     "api",

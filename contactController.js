@@ -71,6 +71,18 @@ exports.update = function (req, res) {
     });
 };
 
+// Handle delete all contacts
+exports.deleteAll = function (req, res) {
+    Contact.remove(function (err, contact) {
+        if (err)
+            res.send(err);
+        res.json({
+            status: "success",
+            message: 'All Contacts deleted'
+        });
+    });
+};
+
 // Handle delete contact
 exports.delete = function (req, res) {
     Contact.remove({
