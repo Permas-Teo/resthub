@@ -1,6 +1,7 @@
 const TEST_PORT = 8081;
 const POST_MESSAGE_SUCCESS = "New contact created!";
 const GET_MESSAGE_SUCCESS = "Contact details loading..";
+const GET_MESSAGE_FAILURE = "Contact not found";
 const GET_ALL_MESSAGE_SUCCESS = "Contacts retrieved successfully";
 const PUT_MESSAGE_SUCCESS = "Contact Info Put";
 const DELETE_MESSAGE_SUCCESS = "Contact deleted";
@@ -30,12 +31,12 @@ var test1_contact_updated = {
     phone: "123456"
 }; 
 
-// var test2_contact = {  
-//     name: "test2",
-//     gender: "male",
-//     email: "test2@gmail.com",
-//     phone: "456"
-// }; 
+var test2_contact = {  
+    name: "test2",
+    gender: "male",
+    email: "test2@gmail.com",
+    phone: "456"
+}; 
 
 describe("Contacts POST", () => {
     describe("POST /", () => {
@@ -69,7 +70,6 @@ describe("Contacts", () => {
                 });
         });       
             
-        // Test to get single contact record
         it("should get a single contact record", (done) => {
             const name = test1_contact["name"];
             chai.request(app)
@@ -81,6 +81,17 @@ describe("Contacts", () => {
                     res.body.data.gender.should.equal(test1_contact["gender"]);
                     res.body.data.email.should.equal(test1_contact["email"]);
                     res.body.data.phone.should.equal(test1_contact["phone"]);   
+                    done();
+                });
+        });
+
+        it("should get a 404 error for nonexistent contact record", (done) => {
+            const name = test2_contact["name"];
+            chai.request(app)
+                .get(`/api/contacts/${name}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.body.message.should.equal(GET_MESSAGE_FAILURE);
                     done();
                 });
         });
