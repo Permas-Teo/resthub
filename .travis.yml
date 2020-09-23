@@ -13,4 +13,4 @@ deploy:
     region: "ap-southeast-1"
     role: "arn:aws:iam::814015162958:role/resthub-user"
     runtime: "nodejs12.x"
-    handler_name: "index"
+    handler_name: "handler"
