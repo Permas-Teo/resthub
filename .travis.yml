@@ -12,5 +12,5 @@ deploy:
     function_name: "resthub"
     region: "ap-southeast-1"
     role: "arn:aws:iam::814015162958:role/root"
-    runtime: "nodejs4.3"
+    runtime: "nodejs12.x"
     handler_name: "handler"
