@@ -1,83 +1,54 @@
-// Import contact model
 Contact = require('./contactModel');
+const MESSAGES = require('./messages');
 
-// Handle index actions, get all
+// Get all
 exports.index = function (req, res) {
     Contact.get(function (err, contacts) {
-        if (err) {
-            res.json({
-                status: "error",
-                message: err,
-            });
-        }
-        res.json({
-            status: "success",
-            message: "Contacts retrieved successfully",
+        if (err)
+            res.send(err);
+        res.status(200).json({
+            message: MESSAGES["GET_ALL_MESSAGE_SUCCESS"],
             data: contacts
         });
     });
 };
 
-// Handle create contact actions, post
-exports.new = function (req, res) {
-    var contact = new Contact();
-    contact.name = req.body.name ? req.body.name : contact.name;
-    contact.gender = req.body.gender;
-    contact.email = req.body.email;
-    contact.phone = req.body.phone;
-    // save the contact and check for errors
-    contact.save(function (err) {
-        // Check for validation error
-        if (err)
-            res.json({
-                status: "error",
-                message: err
-            });
-        else
-            res.json({
-                status: "success",
-                message: 'New contact created!',
-                data: contact
-            });
-    });
-};
-
-// Handle view contact info, get
+// Get one
 exports.view = function (req, res) {
     Contact.find({ 'name': req.params.name }, function (err, contact) {
+        if (err)
+            res.send(err);
         if (contact.length == 0) // no items found
             res.status(404).json({
-                message: 'Contact not found'
+                message: MESSAGES["GET_MESSAGE_FAILURE"]
             });
         else {
             res.status(200).json({
-                message: 'Contact details loading..',
+                message: MESSAGES["GET_MESSAGE_SUCCESS"],
                 data: contact[0] // 1 item
             });
         }
     });
 };
 
-// Handle view contact info, get
-// exports.view = function (req, res) {
-//     try {
-//         Contact.find({ 'name': req.params.name }, function (err, contact) {
-//             res.json({
-//                 status: "success",
-//                 message: 'Contact details loading..',
-//                 data: contact // 1 item
-//             });
-//         });
-//     } catch {
-//         res.json({
-//             status: "error",
-//             message: err
-//         });
-//     }
-// };
+// Post
+exports.new = function (req, res) {
+    var contact = new Contact();
+    contact.name = req.body.name ? req.body.name : contact.name;
+    contact.gender = req.body.gender;
+    contact.email = req.body.email;
+    contact.phone = req.body.phone;
+    contact.save(function (err) {
+        if (err)
+            res.send(err);
+        res.status(200).json({
+            message: MESSAGES["POST_MESSAGE_SUCCESS"],
+            data: contact
+        });
+    });
+};
 
-
-// Handle update contact info, put
+// Put
 exports.update = function (req, res) {
     const update = {
         name: req.params.name,
@@ -88,35 +59,49 @@ exports.update = function (req, res) {
     Contact.findOneAndUpdate({ 'name': req.params.name }, update, {returnOriginal: false, upsert:true, rawResult: true}, function (err, contact) {
         if (err)
             res.send(err);
-        res.json({
-            message: 'Contact Info Put',
-            data: contact
-        });
+
+        if (contact["lastErrorObject"]["updatedExisting"] == true) {
+            res.status(200).json({
+                message: MESSAGES["PUT_MESSAGE_UPDATED_SUCCESS"],
+                data: contact
+            });
+        } else {
+            res.status(201).json({
+                message: MESSAGES["PUT_MESSAGE_CREATED_SUCCESS"],
+                data: contact
+            });
+        }
     });
 };
 
-// Handle delete all contacts
-exports.deleteAll = function (req, res) {
-    Contact.remove(function (err, contact) {
-        if (err)
-            res.send(err);
-        res.json({
-            status: "success",
-            message: 'All Contacts deleted'
-        });
-    });
-};
+// // Delete all
+// exports.deleteAll = function (req, res) {
+//     Contact.remove(function (err, contact) {
+//         if (err)
+//             res.send(err);
+//         res.json({
+//             status: "success",
+//             message: 'All Contacts deleted'
+//         });
+//     });
+// };
 
-// Handle delete contact
+// Delete one
 exports.delete = function (req, res) {
-    Contact.remove({
+    Contact.findOneAndRemove({
         name: req.params.name
-    }, function (err, contact) {
+    }, {rawResult: true}, function (err, contact) {
         if (err)
             res.send(err);
-        res.json({
-            status: "success",
-            message: 'Contact deleted'
-        });
+        if (contact["value"] == undefined) { // no items found
+            res.status(404).json({
+                message: MESSAGES["DELETE_MESSAGE_FAIL"],
+                data: contact
+            })
+        } else {
+            res.status(204).json({
+                data: contact
+            });
+        }
     });
 };
