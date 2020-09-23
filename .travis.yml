@@ -11,7 +11,6 @@ deploy:
     provider: lambda
     function_name: "resthub"
     region: "ap-southeast-1"
-    role: "arn:aws:iam::0123456789012:role/lambda_basic_execution"
+    role: "arn:aws:kms:ap-southeast-1:814015162958:key/c19d4b3f-af23-4236-8360-7c4f95713f47"
     runtime: "nodejs4.3"
     handler_name: "handler"
-
