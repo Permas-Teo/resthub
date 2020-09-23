@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 // Setup schema
 var contactSchema = mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
