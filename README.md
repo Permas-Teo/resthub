@@ -49,7 +49,7 @@ npm test
 
 ## Run tests on Travis (B2)
 
-Travis CI build  is set up to run test automatically on code push to any branch of resthub. It can be accessed at https://travis-ci.org/github/Permas-Teo/resthub
+Travis CI build  is set up to run test automatically on code push/PR to any branch of resthub. It can be accessed at https://travis-ci.org/github/Permas-Teo/resthub
 
 
 
