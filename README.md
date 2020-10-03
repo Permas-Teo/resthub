@@ -15,11 +15,11 @@ npm start
 
 Name serves as the primary key, all contact objects will be identified by name, represented with {contact name} through the api. 
 
-GET all contact: http://localhost:8080/api/contacts
+__GET all contact__: http://localhost:8080/api/contacts
 
-GET single contact: http://localhost:8080/api/contacts/{contact name}
+__GET single contact__: http://localhost:8080/api/contacts/{contact name}
 
-POST  contact: http://localhost:8080/api/contacts
+__POST  contact__: http://localhost:8080/api/contacts
 
 Sample Body fields:
 
@@ -28,11 +28,17 @@ Sample Body fields:
 "email": "test_name@gmail.com",
 "phone": "123"
 
-PUT contact: http://localhost:8080/api/contacts/{contact name}
+__PUT contact__: http://localhost:8080/api/contacts/{contact name}
+
+Sample Body fields:
+
+"gender": "male",
+"email": "test_name@hotmail.com",
+"phone": "456"
 
 New contact created if {contact name} does not exist, otherwise update fields of contact with name = {contact name}. **Note: name field cannot be updated through PUT**
 
-DELETE contact: http://localhost:8080/api/contacts/{contact name}
+__DELETE contact__: http://localhost:8080/api/contacts/{contact name}
 
 Contact deleted if found
 
