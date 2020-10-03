@@ -13,11 +13,11 @@ npm start
 
 ## Access deployed API via Postman (B1)
 
-Name serves as the primary key, all contact objects will be identified by name, represented with {contact name} through the api. 
+Name serves as the primary key, all contact objects will be identified by name, represented with {contact_name} through the api. 
 
 __GET all contact__: http://localhost:8080/api/contacts
 
-__GET single contact__: http://localhost:8080/api/contacts/{contact name}
+__GET single contact__: http://localhost:8080/api/contacts/{contact_name}
 
 __POST  contact__: http://localhost:8080/api/contacts
 
@@ -28,7 +28,7 @@ Sample Body fields:
 "email": "test_name@gmail.com",
 "phone": "123"
 
-__PUT contact__: http://localhost:8080/api/contacts/{contact name}
+__PUT contact__: http://localhost:8080/api/contacts/{contact_name}
 
 Sample Body fields:
 
@@ -36,9 +36,9 @@ Sample Body fields:
 "email": "test_name@hotmail.com",
 "phone": "456"
 
-New contact created if {contact name} does not exist, otherwise update fields of contact with name = {contact name}. **Note: name field cannot be updated through PUT**
+New contact created if {contact_name} does not exist, otherwise update fields of contact with name = {contact_name}. **Note: name field cannot be updated through PUT**
 
-__DELETE contact__: http://localhost:8080/api/contacts/{contact name}
+__DELETE contact__: http://localhost:8080/api/contacts/{contact_name}
 
 Contact deleted if found
 
