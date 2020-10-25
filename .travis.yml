@@ -7,11 +7,11 @@ services:
     - mongodb
 script: npm test
 
-# deploy:
-#     provider: lambda
-#     function_name: "resthub"
-#     region: "ap-southeast-1"
-#     role: "arn:aws:iam::814015162958:role/resthub-user"
-#     runtime: "nodejs12.x"
-#     module_name: "lambda/lambda"
-#     handler_name: "handler"
+deploy:
+    provider: lambda
+    function_name: "resthub"
+    region: "ap-southeast-1"
+    role: "arn:aws:iam::814015162958:role/resthub-user"
+    runtime: "nodejs12.x"
+    module_name: "lambda/lambda"
+    handler_name: "handler"
