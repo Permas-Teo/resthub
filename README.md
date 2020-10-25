@@ -1,5 +1,4 @@
 # resthub
-CS3219 assignment B1, B2
 
 ## Run the API locally (B1)
 
@@ -50,6 +49,10 @@ npm test
 ## Run tests on Travis (B2)
 
 Travis CI build  is set up to run test automatically on code push/PR to any branch of resthub. It can be accessed at https://travis-ci.org/github/Permas-Teo/resthub
+
+## Demonstrate ability to automatically deploy tool to AWS via Travis (B3)
+
+Travis CI build  is set up to deploy to AWS automatically on code push/PR to any branch of resthub. It can be accessed at https://travis-ci.org/github/Permas-Teo/resthub
 
 
 
