@@ -39,8 +39,11 @@ exports.new = function (req, res) {
     contact.email = req.body.email;
     contact.phone = req.body.phone;
     contact.save(function (err) {
-        if (err)
+        if (err) {
             res.send(err);
+            return;
+        }
+            
         res.status(200).json({
             message: MESSAGES["POST_MESSAGE_SUCCESS"],
             data: contact
