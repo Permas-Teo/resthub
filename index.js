@@ -1,10 +1,12 @@
 // Imports
 let express = require('express');
+var cors = require('cors');
 let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 
 // Initialise the app
 let app = express();
+app.use(cors());
 
 // Import routes
 let apiRoutes = require("./api-routes");
